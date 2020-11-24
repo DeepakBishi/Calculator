@@ -10,12 +10,10 @@ root = Tk()
 root.title("Simple Calculator")
 root.resizable(False, False)
 
-e = Entry(root, width=50, borderwidth=0)
+e = Entry(root, width=30, borderwidth=0, font=('Helvetica', 13))
 e.grid(row=0, column=0, columnspan=4, padx=0, pady=0)
 
 e.configure(bg='#737373')
-
-
 
 
 def get_NUM():
