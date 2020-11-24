@@ -16,6 +16,8 @@ e.grid(row=0, column=0, columnspan=4, padx=0, pady=0)
 e.configure(bg='#737373')
 
 
+
+
 def get_NUM():
     if "." in e.get():
         num = float(e.get())
