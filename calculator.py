@@ -5,14 +5,14 @@ OPERATOR = None
 NUM = None
 NUM1 = None
 NUM2 = None
+RESULT = 0
 
 root = Tk()
 root.title("Simple Calculator")
 root.resizable(False, False)
 
-e = Entry(root, width=30, borderwidth=0, font=('Helvetica', 13))
+e = Entry(root, width=30, borderwidth=0, font=('Helvetica', 13), justify=RIGHT)
 e.grid(row=0, column=0, columnspan=4, padx=0, pady=0)
-
 e.configure(bg='#737373')
 
 
@@ -26,8 +26,8 @@ def get_NUM():
 
 def delete_last_char():
     current = e.get()
-    l = len(current) - 1
-    new = current[0:l]
+    length = len(current) - 1
+    new = current[0:length]
     e.delete(0, END)
     e.insert(0, new)
     global NUM
@@ -64,50 +64,65 @@ def get_operators(opr):
     e.delete(0, END)
 
 
+def changesign():
+    global NUM
+    global RESULT
+    NUM = get_NUM()
+    RESULT = 0 - NUM
+    e.delete(0, END)
+    e.insert(0, RESULT)
+
+
 def calculate():
     global NUM
     global NUM2
+    global RESULT
+
     if OPERATOR == "addition":
         NUM2 = get_NUM()
         e.delete(0, END)
-        result = NUM1 + NUM2
+        RESULT = NUM1 + NUM2
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "subtraction":
         NUM2 = get_NUM()
-        result = NUM1 - NUM2
+        RESULT = NUM1 - NUM2
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "multiplication":
         NUM2 = get_NUM()
-        result = NUM1 * NUM2
+        RESULT = NUM1 * NUM2
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "divide":
         NUM2 = get_NUM()
-        result = NUM1 / NUM2
+        RESULT = NUM1 / NUM2
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "percentage":
         NUM = NUM1
-        result = NUM / 100
+        RESULT = NUM / 100
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "square":
         NUM = NUM1
-        result = NUM ** 2
+        RESULT = NUM ** 2
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "squareroot":
         NUM = NUM1
-        result = sqrt(NUM)
+        RESULT = sqrt(NUM)
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
     elif OPERATOR == "inverse":
         NUM = NUM1
-        result = 1 / NUM
+        RESULT = 1 / NUM
         e.delete(0, END)
-        e.insert(0, result)
+        e.insert(0, RESULT)
+
+    clear()
+    e.delete(0, END)
+    e.insert(0, RESULT)
 
 
 button_1 = Button(root, text="1", height=3, width=10, bg='#0d0d0d', fg='white', command=lambda: button_click(1))
@@ -125,10 +140,10 @@ button_mul = Button(root, text="*", height=3, width=10, bg='#333333', fg='white'
 button_sub = Button(root, text="-", height=3, width=10, bg='#333333', fg='white', command=lambda: get_operators("subtraction"))
 button_add = Button(root, text=u'\u002B', height=3, width=10, bg='#333333', fg='white', command=lambda: get_operators("addition"))
 button_eq = Button(root, text="=", height=3, width=10, bg='#e69900', fg='white', command=lambda: calculate())
-button_alt = Button(root, text=u'\u00B1', height=3, width=10, bg='#0d0d0d', fg='white', command=lambda: get_operators(""))
+button_alt = Button(root, text=u'\u00B1', height=3, width=10, bg='#0d0d0d', fg='white', command=changesign)
 button_dot = Button(root, text=".", height=3, width=10, bg='#0d0d0d', fg='white', command=lambda: button_click("."))
 button_reminder = Button(root, text="%", height=3, width=10, bg='#333333', fg='white', command=lambda: get_operators("percentage"))
-button_CE = Button(root, text="CE", height=3, width=10, bg='#333333', fg='white', command=lambda: get_operators("CE"))
+button_CE = Button(root, text="CE", height=3, width=10, bg='#333333', fg='white', command=clear)
 button_clear = Button(root, text="C", height=3, width=10, bg='#333333', fg='white', command=clear)
 button_delete = Button(root, text=u'\u232B', height=3, width=10, bg='#333333', fg='white', command=lambda: delete_last_char())
 button_inverse = Button(root, text="1/x", height=3, width=10, bg='#333333', fg='white', command=lambda: get_operators("inverse"))
